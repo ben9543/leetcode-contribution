@@ -27,3 +27,7 @@
 	<li><code>nums</code> is sorted in ascending order.</li>
 </ul>
 </div>
+
+## My Note
+
+- The reason why we have to use `while(low <= high)` instead of `while(low < high)` : The loop will pass when the low and high are the same, which will not return the index of the target value in the case when it is found at the last.
