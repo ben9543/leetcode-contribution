@@ -35,3 +35,15 @@
 <p>&nbsp;</p>
 <p><strong>Follow up:</strong> Could you implement a solution using only <code>O(1)</code> extra space complexity and <code>O(n)</code> runtime complexity?</p>
 </div>
+
+
+## Solution with O(1) Space Complexity in O(n) Time Complexity
+
+- Even though the given list is unsorted, we can find the answer by adding all of its elements and subtract it from sum of nums in 0 .. n (n*n+1)/2
+
+```py
+sum = 0
+for num in integers:
+	sum+=num
+return len(integers)*(len(integers)+1)/2 - sum
+```
