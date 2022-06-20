@@ -7,6 +7,8 @@ public:
             
             // Check if key is in nums
             auto pos = find(nums.begin()+i+1, nums.end(), key);
+            
+            // If the key is not found,
             if (pos!=nums.end()) {
                 aPtr = i;
                 bPtr = pos - nums.begin();
