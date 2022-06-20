@@ -31,12 +31,12 @@ public:
             // And currNode need to be updated as nextNode for the next loop (nextNode = currNode->next)
             // The location of nextNode is not important at the point.
             // 
-            // 
+            //         
             //       prev   curr    next   
-            //  () <- () <- ()      ()
-            //
+            //  () <- () <- ()      () -> () -> ...
+            //         
             //             prev  curr&next   
-            //  () <- () <- ()      ()
+            //  () <- () <- ()      () -> () -> ...
             prevNode = currNode;
             currNode = nextNode;
         }
