@@ -21,8 +21,7 @@ public:
                 merge(root, root->next, root->child);
                 root->child = nullptr;
             } 
-            root = nextNode;
-            
+            root = nextNode; => This made the loop to skip when the input is [1,null,2,null,3,null] (only connected with child)
             */
             if (root->child){
                 merge(root, root->next, root->child);
@@ -48,19 +47,10 @@ public:
             child = child->next;
         }
 
-        
-
         // Attach child and next(tail)
         // The conditional statement is to check next is null or not
-        /* ERROR was: 
         if (next){
-            child->next = next;
-            next->prev = child;  
-        }
-        */
-         // This needs to be outside of the conditional statement because otherwise
-        if (next){
-            child->next = next;
+            child->next = next; // does not matter if this is outside or not
             next->prev = child;  
         }
     }
