@@ -15,8 +15,15 @@ public:
         if (!head) return head;
         Node* root = head;
         while(root){
-            // cout << head->val << endl;
             Node* nextNode = root->next;
+            /*  ERROR here was:          
+            if (root->child){
+                merge(root, root->next, root->child);
+                root->child = nullptr;
+            } 
+            root = nextNode;
+            
+            */
             if (root->child){
                 merge(root, root->next, root->child);
                 root->child = nullptr;
@@ -42,6 +49,12 @@ public:
         }
 
         // Attach child and next(tail)
+        /* ERROR was: 
+        if (next){
+            child->next = next;
+            next->prev = child;  
+        }
+        */
         child->next = next;
         if (next){
             next->prev = child;  
