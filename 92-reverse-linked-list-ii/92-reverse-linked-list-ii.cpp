@@ -23,6 +23,9 @@ public:
             currNode = currNode->next;
             currentPos++;
         }
+        
+        // IMPORTANT Because the currNode->next will become the tailNode of newly created list later
+        // So tail is pointing DIRECTLY to where currNode points after the first shifting.
         ListNode *newList, *tail = currNode;
         
         while (currentPos >= left && currentPos <= right){
@@ -34,7 +37,12 @@ public:
             
             currentPos++;
         }
-        
+        // At this point,m currNode always points to nextNode which is one step more than the where the right points.
+        // Visualization after the loop
+        //
+        // start  tail        newList   currNode/nextNode
+        // (1) -> (2) <- (3) <- (4)         (5)
+        //
         startNode->next = newList;
         tail->next = currNode;
         
