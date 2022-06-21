@@ -48,15 +48,19 @@ public:
             child = child->next;
         }
 
+        
+
         // Attach child and next(tail)
+        // The conditional statement is to check next is null or not
         /* ERROR was: 
         if (next){
             child->next = next;
             next->prev = child;  
         }
         */
-        child->next = next;
+         // This needs to be outside of the conditional statement because otherwise
         if (next){
+            child->next = next;
             next->prev = child;  
         }
     }
