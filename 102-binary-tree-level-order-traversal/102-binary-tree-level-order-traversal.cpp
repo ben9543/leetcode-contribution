@@ -27,6 +27,7 @@ public:
         vector<int> tv = {root->val};
         result.push_back(tv);
         
+        // Using BFS
         while(!q.empty()){
             vector<int> temp;
             queue<TreeNode*> currLevel = q.front();
@@ -44,6 +45,7 @@ public:
                     temp.push_back(n->right->val);
                 };
             }
+            
             if (!nextLevel.empty())
                 q.push(nextLevel);
             if (!temp.empty())
