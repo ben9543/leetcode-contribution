@@ -8,7 +8,6 @@ public:
             string left =  s.substr(0,start) + s.substr(start+1, end+1);
             string right = s.substr(0,end) + s.substr(end+1, s.length());
             int leftStart = 0, leftEnd = left.length()-1, rightStart = 0, rightEnd = right.length()-1;
-            
             if (isPalindrome(leftStart, leftEnd, left) || isPalindrome(rightStart, rightEnd, right)){
                 return true;
             }
