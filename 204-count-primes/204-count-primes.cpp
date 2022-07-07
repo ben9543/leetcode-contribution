@@ -8,6 +8,7 @@ public:
         // Implementation
         int count = 0;
         vector<bool> isPrime(n+2, true);
+        
         for (int i = 2; i < n; i++){
             if(isPrime[i]){
                 count++;
