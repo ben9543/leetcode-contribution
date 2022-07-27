@@ -14,10 +14,6 @@ public:
             }
         }
         
-        for (auto m: mp){
-            cout << m.first << m.second << endl;
-        }
-        
         for (auto c: t){
             if(mp.find(c) == mp.end()){ // not found
                 return false;
@@ -28,7 +24,6 @@ public:
         }
         
         for (auto m: mp){
-            cout << m.first << m.second << endl;
            if( m.second != 0) return false;
         }
         
