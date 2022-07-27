@@ -1,15 +1,15 @@
+#include<map>
 class Solution {
 public:
     bool containsDuplicate(vector<int>& nums) {
-        unordered_set<int> s;
-        
-        for (int i = 0; i < nums.size(); i++) {
-            if (s.find(nums[i]) != s.end()) {
+        unordered_map<int, bool> seen;
+        for(int i = 0; i < nums.size(); i++){
+            if(seen.count(nums[i])){
                 return true;
+            } else {
+                seen[nums[i]] = true;
             }
-            s.insert(nums[i]);
         }
-        
         return false;
     }
 };
