@@ -1,6 +1,3 @@
-#include<map>
-#include<algorithm>
-
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
@@ -14,7 +11,7 @@ public:
             
             if(i > 0 && nums[i] == nums[i-1])continue;
             
-            int low = i+1;
+            int low = i +1;
             int high = nums.size() - 1;
             
             while(low < high)
