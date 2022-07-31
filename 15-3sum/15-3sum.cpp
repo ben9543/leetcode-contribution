@@ -5,25 +5,31 @@ public:
         
         // Sort the array first. This is for removing duplicates & two pointer search.
         sort(nums.begin(), nums.end());
-        
-        for (int i = 0; i < nums.size(); i++)
+    
+        for(int i = 0; i < nums.size(); i++)
         {
             
-            if(i > 0 && nums[i] == nums[i-1])continue;
+            // Skipping i
+            if(i > 0 && nums[i-1] == nums[i])continue;
             
-            int low = i +1;
-            int high = nums.size() - 1;
-            
-            while(low < high)
+            int aptr = i+1;
+            int bptr = nums.size()-1;
+            while(aptr < bptr)
             {
-                int sum = nums[low] + nums[high] + nums[i];
-                if(sum < 0) low++;
-                else if(sum > 0) high--;
-                else{
-                    vector<int> tmp = {nums[low], nums[high], nums[i]};
+                int sum = nums[i] + nums[aptr] + nums[bptr];
+                if(sum == 0){
+                    vector<int> tmp = {nums[i], nums[aptr], nums[bptr]};
                     res.push_back(tmp);
-                    low++;
-                    while(nums[low] == nums[low-1] && low < high)low++;
+                    
+                    // Skipping duplicates
+                    aptr++;
+                    while(nums[aptr-1] == nums[aptr] && aptr < bptr)
+                        aptr++;
+                    
+                } else if(sum < 0) {
+                    aptr++;
+                } else {
+                    bptr--;
                 }
             }
         }
