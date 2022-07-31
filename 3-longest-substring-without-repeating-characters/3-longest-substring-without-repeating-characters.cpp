@@ -1,30 +1,31 @@
-#include <map>
 class Solution {
 public:
-    int lengthOfLongestSubstring(string s) {
-        int aptr = 0;
+    int characterReplacement(string s, int k) {
         int maxLen = 0;
+        int maxFreq = 0;
+        int l = 0;
         unordered_map<char, int> hm;
-        // Sliding window
-        // [////{    ]   }
-        // expand the window
-        // if the repeating charater is found, update the maxLen
-        // also update the hashmap & aptr
-        // if aptr is less than the value(index) stored in the hashmap, update aptr as the stored value
-        // else update the hashmap
         
-        for(int bptr = 0; bptr < s.length(); bptr++)
+        for (int r = 0; r < s.length(); r++)
         {
-            if(hm.find(s[bptr]) == hm.end()) hm[s[bptr]] = bptr;
-            else{
-                if(hm[s[bptr]] >= aptr){
-                    aptr = hm[s[bptr]] + 1;
-                }
-                hm[s[bptr]] = bptr;
+            char c = s[r];
+            // Add elements' frequency to the hashmap
+            if(hm.find(c) == hm.end()) hm[c] = 1;
+            else hm[c]++;
+            
+            // Update the max frequency
+            maxFreq = max(maxFreq, hm[c]);
+            
+            // If current window is invalid, increase left pointer
+            // Before move the left pointer, decrease the count from the hashmap
+            while(r - l + 1 - maxFreq > k){
+                hm[s[l]]--;
+                l++;
             }
-            maxLen = max(maxLen, bptr - aptr + 1);
+            
+            // Update the maxLen
+            maxLen = max(maxLen, (r - l + 1));
         }
-        
         return maxLen;
     }
 };
