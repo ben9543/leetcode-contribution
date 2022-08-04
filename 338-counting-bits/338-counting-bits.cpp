@@ -1,24 +1,21 @@
 class Solution {
 public:
     vector<int> countBits(int n) {
-        vector<int> res(n+1);
-        int baseNum = 0;
-        int baseCount = 0;
-        for (int i = 0; i <= n; i++){
-            int count = 0;
-            if(i == pow(2, baseCount+1)){
-                ++baseCount;
-                baseNum = pow(2, baseCount);
-            }
-            cout << i << ":" << baseNum << endl;
-            // Update count
-            //	count = res[baseNum] + res[i - baseNum]
-            if(i == 0)res[i] = i;
-            else if(i == 1)res[i] = i;
-            else if(baseNum == i)res[i] = 1;
-            else res[i] = res[baseNum] + res[i - baseNum];
+        vector<int> dp(n+1, 0);
+        vector<int> res;
+        int offset = 1; // Stores the highest value of the power of 2
+        
+        for (int i = 1; i < n+1; i++)
+        {
+            // Update offset whenever we found i that is power of 2
+            if(offset * 2 == i)
+                offset = i;
+            
+            // We are getting the number of bits of dp[i] by using the previous results
+            // Offset means the most significant bit's value
+            dp[i] = 1 + dp[i - offset];
         }
-        return res;
-
+        
+        return dp;
     }
 };
