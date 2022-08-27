@@ -7,16 +7,21 @@ public:
     }
     
     void helper(vector<string>& res, string s, int open, int close){
-        if(!open && !close){
+        // count stands for how many open paranthesis are used so far
+        
+        // If close is less than open, return function (invalid)
+        if(open > close)return;
+        
+        // If open is zero, append close until it gets to zero and then return it
+        if(open == 0){
+            while(close){
+                s+=")";
+                close--;
+            }
             res.push_back(s);
             return;
         }
-        if(open > close || open < 0 || close < 0) return;
-        else{
-            string tmp1 = s+'(';
-            helper(res, tmp1, open-1, close);
-            string tmp2 = s+')';
-            helper(res, tmp2, open, close-1);
-        }
+        helper(res, s+"(", open-1, close);
+        helper(res, s+")", open, close-1);
     }
 };
