@@ -1,37 +1,35 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        vector<vector<int>>res;
         
-        // Sort the array first. This is for removing duplicates & two pointer search.
+        vector<vector<int>> res;
+        int i = 0;
         sort(nums.begin(), nums.end());
-    
-        for(int i = 0; i < nums.size(); i++)
+        
+        // Nested for loop + two pointer approach
+        while(i < nums.size())
         {
+            while(i != 0 && i < nums.size() && nums[i-1] == nums[i])
+                i++;
             
-            // Skipping i
-            if(i > 0 && nums[i-1] == nums[i])continue;
+            int low = i+1;
+            int high = nums.size()-1;
             
-            int aptr = i+1;
-            int bptr = nums.size()-1;
-            while(aptr < bptr)
+            while(low < high)
             {
-                int sum = nums[i] + nums[aptr] + nums[bptr];
-                if(sum == 0){
-                    vector<int> tmp = {nums[i], nums[aptr], nums[bptr]};
-                    res.push_back(tmp);
-                    
-                    // Skipping duplicates
-                    aptr++;
-                    while(nums[aptr-1] == nums[aptr] && aptr < bptr)
-                        aptr++;
-                    
-                } else if(sum < 0) {
-                    aptr++;
+                int sum = nums[i] + nums[low] + nums[high];
+                if(sum < 0){
+                    low++;
+                } else if(sum > 0) {
+                    high--;
                 } else {
-                    bptr--;
+                    res.push_back({nums[i], nums[low], nums[high]});
+                    low++;
+                    while(low < high && nums[low-1] == nums[low])
+                        low++;
                 }
             }
+            i++;
         }
         
         return res;
