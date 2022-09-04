@@ -2,31 +2,24 @@ class Solution {
     
 public:
     bool isAnagram(string s, string t) {
-        
-        if(s.length() != t.length())return false;
-        
-        unordered_map<char, int> mp;
-        for (auto c : s){
-            if(mp.find(c) == mp.end()){
-                mp[c] = 1;
-            } else {
-                mp[c] = mp[c] + 1;
-            }
+        unordered_map<char, int> hm;
+        for(auto c : s){
+            if(hm.find(c) != hm.end())
+                hm[c]++;
+            else
+                hm[c] = 1;
         }
         
-        for (auto c: t){
-            if(mp.find(c) == mp.end()){ // not found
+        for(auto c : t){
+            if(hm.find(c) == hm.end())
                 return false;
-            } else {
-                mp[c] -= 1;
-                if(mp[c] < 0) return false;
-            }
+            else
+                hm[c]--;
+            
+            if(hm[c] == 0)
+                hm.erase(c);
         }
         
-        for (auto m: mp){
-           if( m.second != 0) return false;
-        }
-        
-        return true;
+        return (hm.size()==0);
     }
 };
