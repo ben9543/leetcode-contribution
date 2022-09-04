@@ -41,11 +41,7 @@ public:
         // Append NULL to newList
         newList->next = nullptr;
         endOfList = newList->next;
-        
-        // Now all elements in the old list are respectively pointing to the newList elements
-        for(auto h : hm){
-            cout << h.first << ":" << h.second <<endl;
-        }
+    
         
         // Assign head pointer to head_cp
         head_cp = head;
