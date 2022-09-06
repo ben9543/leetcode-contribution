@@ -1,28 +1,32 @@
 class Solution {
 public:
+    
+    // key: from this key(index)
+    // value: value many ways to decode
+    unordered_map<string, int> m;
+    
     int numDecodings(string s) {
         
-        // Two choices:
-        //      1. Take only one digit
-        //      2. Take two digits
-        // The current action will change the result => Dynamic Programming (X greedy)
-        unordered_map<string, int> um;
-        return helper(s, um);
+        // Need to test to cases: taking 1 string & taking 2 strings
+        
+        return helper(s);
+        
     }
-    int helper(string s, unordered_map<string, int>& um){
-        if(um.find(s) != um.end()) return um[s];
+    
+    int helper(string s){
         
-        // if first digit equals to 0 return 0 (dead)
-        if(s[0] == '0') return 0;
+        // Base cases
+        if(s[0] == '0')return 0;
+        if(s.length() <= 1)return 1;
+        if(m.find(s) != m.end()) return m[s];
         
-        if(s.length() <= 1) return 1;
-
-        // if first digit is greater than 2, can take only 1 digit
-        if(s[0] > '2' || s[0] == '2' && s[1] > '6' ){
-            return um[s] = helper(s.substr(1, s.length()), um);
+        // We can take two chars at most
+        if(s[0]=='1' || (s[0] =='2' && s[1] <= '6')){
+            return m[s] = helper(s.substr(1,s.length()-1)) + helper(s.substr(2, s.length()-2));
         }
         
-        return um[s] = helper(s.substr(1, s.length()), um) + helper(s.substr(2, s.length()), um);
-
+        return m[s] = helper(s.substr(1,s.length()-1));
     }
+    
+    
 };
