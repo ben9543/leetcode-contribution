@@ -17,7 +17,6 @@ public:
         
         for(auto p : m){
             pq.push(p.second);
-            cout << p.first <<":"<<p.second<<endl;
         }
         cout << pq.size() << endl;
         while(!pq.empty() || !q.empty()){
