@@ -1,34 +1,43 @@
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        vector<int> res;
+        vector<int> result = {};
+        vector<vector<int>> res(nums.size()+1);
         unordered_map<int, int> hm;
-        priority_queue<pair<int, int>> pq;
         
-        // store in the hashmap
-        for (auto n : nums)
-        {
-            if(hm.find(n) == hm.end()){
+        // nO(logn) => Sort
+        // O(n) => Bucket Sort
+        
+        if(nums.size() == k)return nums;
+        
+        // Get frequencies
+        for(auto n : nums){
+            if(hm.find(n) == hm.end())
                 hm[n] = 1;
-            } else {
+            else
                 hm[n]++;
+        }
+        
+        // We are storing a count as index. Each index will have a vector of integers.
+        for(auto p : hm){
+            int freq = p.second;
+            int key = p.first;
+            res[freq].push_back(key);
+        }
+        
+        // Appending to the result
+        for(int i = res.size()-1; i >= 0; i--){
+            if(res[i].empty())continue;
+            for(auto r : res[i]){
+                
+                // Push elements
+                result.push_back(r);
+                
+                // It is guaranteed that we are going to find the answer
+                if(result.size() == k)return result;
             }
         }
         
-        // 
-        for(auto p : hm)
-        {
-            // freq, num
-            pair<int, int> tmp;
-            tmp.first = p.second;
-            tmp.second = p.first;
-            pq.push(tmp);
-        }
-        while(k){
-            res.push_back(pq.top().second);
-            pq.pop();
-            k--;
-        }
-        return res;
+        return result;
     }
 };
