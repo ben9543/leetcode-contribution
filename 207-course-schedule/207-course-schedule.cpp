@@ -1,50 +1,41 @@
 class Solution {
 public:
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        int count = 0;
-        vector<vector<int>> adjList(numCourses+1);
-        vector<int> inDegree(numCourses,0);
-        if(numCourses == 1 || numCourses == 0 || prerequisites.size() == 1) return true;
         
-        // Initializing the data structures
-        for (int i = 0; i < numCourses; i++)
-            adjList.push_back(vector<int>());
-        
-        // Creating the data structures
-        for (int i = 0; i < prerequisites.size(); i++){
-            vector<int> pair = prerequisites[i];
-            int to = pair[0];
-            int from = pair[1];
+        // Create an adjcency list
+        unordered_map<int, vector<int>> adj;
+        unordered_set<int> visited;
+        for (auto p : prerequisites)
+        {
+            // p[0] => Course want to take
+            // p[1] => Prerequisites
             
-            // Creating inDegree
-            inDegree[to]+=1;
-            //for (auto i : inDegree)cout << i << "\t";
-            //cout << endl;
-            
-            
-            // Creating adjList
-            adjList[from].push_back(to);
+            adj[p[0]].push_back(p[1]);
         }
         
-        //for (auto i : inDegree)cout << i << "\t";
-        
-        // From inDegree, find i with 0 in-degree
-        vector<int> stack;
-        for (int i = 0; i < inDegree.size(); i++){
-            if (inDegree[i] == 0) {
-                stack.push_back(i);
-            };
+        for(int i = 0; i < numCourses; i++){
+            
+            if(!DFS(adj, visited, i))return false;
         }
-        while(!stack.empty()){
-            int polled = stack.back();
-            stack.pop_back();
-            count++;
-            for (auto i: adjList[polled]){
-                inDegree[i]-=1;
-                if(inDegree[i] == 0)stack.push_back(i);
-            }
-        }
-        cout << count << endl;
-        return numCourses == count;
+    
+        return true;
     }
+    
+    bool DFS(unordered_map<int, vector<int>>& adj, unordered_set<int>& visited, int curr){
+        if(visited.find(curr) != visited.end()) return false;
+        if(adj[curr].empty())return true;
+        visited.insert(curr);
+        for(auto el : adj[curr])
+            if(!DFS(adj, visited, el))return false;
+        
+        // Remove the curr course from the visited after DFS.
+        // The curr cannot be ignored, we finished its prerequsites, not the course itself yet.
+        visited.erase(curr);
+        
+        // Set it to the empty list because we finined all prerequsites of this course
+        // and now we can take this course
+        adj[curr] = {};
+        return true;
+    }
+    
 };
