@@ -25,13 +25,11 @@ public:
             if(visited.find(currNode) != visited.end())continue;
             res += currCost;
             visited.insert(currNode);
-            //if(visited.size() == points.size())break;
             for(int i = 0; i < adj[currNode].size(); i++){
-                
                 int nextNode = adj[currNode][i].second;
                 int nextCost = adj[currNode][i].first;
-                
-                minHeap.push({nextCost, nextNode});
+                if(visited.find(nextNode) == visited.end())
+                    minHeap.push({nextCost, nextNode});
             }
         }
         
