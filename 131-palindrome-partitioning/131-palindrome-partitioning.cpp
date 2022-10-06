@@ -13,7 +13,6 @@ public:
         }
         for (int j = start+1; j <= s.length();j++){
             string c = string(s.begin()+start, s.begin()+j);
-            cout << c << endl;
             if(isPalindrome(c)){
                 curr.push_back(c);
                 helper(j, s, curr);
