@@ -1,45 +1,44 @@
 class Twitter {
+    
+private:
+    vector<pair<int, int>> posts;
+    unordered_map<int, unordered_set<int>> following;
+    
 public:
-    
-    // Each user will have feed
-    // Push the feed to all users that have the feed's tweetId
-    vector<vector<bool>> followerMatrix;
-    priority_queue<vector<int>> feedTimeline; // <time, userId, tweetId>
-    int time = 0;
-    
     Twitter() {
-        followerMatrix = vector<vector<bool>>(501, vector<bool>(501, false));
-        for(int i = 0; i < 501; i++)
-            followerMatrix[i][i] = true;
+        
     }
     
     void postTweet(int userId, int tweetId) {
-        feedTimeline.push({time, userId, tweetId});
-        time++;
+        posts.push_back({userId, tweetId});
     }
     
     vector<int> getNewsFeed(int userId) {
-        vector<int> res;
-        priority_queue<vector<int>> cp = feedTimeline;
-        while(res.size() < 10 && !cp.empty()){
-            vector<int> data = cp.top();
-            // int t = data[0];
-            int uid = data[1];
-            int tid = data[2];
-            if(followerMatrix[userId][uid]){
-                res.push_back(tid);
+        vector<int> newFeed;
+        int count = 10;
+        
+        // Posts are already ordered by created time 
+        for(int i = posts.size()-1; i >= 0; i--){
+            if(count <= 0) break;
+            int author = posts[i].first;
+            int tweetId = posts[i].second;
+            unordered_set<int> s = following[userId];
+            s.find(userId);
+            if(author == userId || s.find(author) != s.end()){
+                newFeed.push_back(tweetId);
+                count--;
             }
-            cp.pop();
         }
-        return res;
+        
+        return newFeed;
     }
     
     void follow(int followerId, int followeeId) {
-        followerMatrix[followerId][followeeId] = true;
+        following[followerId].insert(followeeId);
     }
     
     void unfollow(int followerId, int followeeId) {
-        followerMatrix[followerId][followeeId] = false;
+        following[followerId].erase(followeeId);
     }
 };
 
